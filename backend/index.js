@@ -1,19 +1,46 @@
 const express = require("express");
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 const app = express();
-const mongodb = require("./db");
-const dotenv = require ("dotenv").config();
+const PORT = 5000;
 
-mongodb();   // connect to MongoDB
+// ------------------ MongoDB + Food Data ------------------
+require("./db")((err, data, CatData) => {
+  if (err) {
+    console.log("Food DB error:", err);
+  } else {
+    global.foodData = data;
+    global.foodCategory = CatData;
+    console.log("Food data loaded");
+  }
+});
 
-// Middleware to read JSON
+// ------------------ Middleware ------------------
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("GoFood backend is running");
+// CORS for React
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  next();
 });
-app.use('/api',require("./routes/CreateUser")); 
-app.use(express.json())
 
-app.listen(5000, () => {
-  console.log("Server is running on port 5000");
+// ------------------ Test Route ------------------
+app.get("/", (req, res) => {
+  res.send("GoFood Backend is Running");
+});
+
+// ------------------ Routes ------------------
+app.use("/api", require("./routes/CreateUser"));   // signup
+app.use("/api/auth", require("./routes/Auth"));   // login, orders, food
+app.use("/api/food", require("./routes/FoodData"));// food menu
+
+// ------------------ Start Server ------------------
+app.listen(PORT, () => {
+  console.log(`GoFood Server running on http://localhost:${PORT}`);
 });

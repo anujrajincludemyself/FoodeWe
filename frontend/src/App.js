@@ -1,31 +1,32 @@
-import React from 'react'
-import Header from './components/Header'
-import Navbar from './components/Navbar'
-import Home from './screens/Home'
-import{
+import "./App.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+
+import Home from "./screens/Home";
+import Login from "./screens/Login";
+import Signup from "./screens/Signup";
+import MyOrder from "./screens/MyOrder";
+
+import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
-import Login from './screens/Login';
-import '../node_modules/bootstrap-dark-5/dist/css/bootstrap-dark.min.css';
-import '../node_modules/bootstrap/dist/js/bootstrap.bundle';
-import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 
-const App = () => {
+import { CartProvider } from "./components/ContextReducer";
+
+function App() {
   return (
-    
-    <Router>
-      <div>
+    <CartProvider>
+      <Router>
         <Routes>
-          <Route exact path = "/" element={<Home/>}/>
-          <Route exact path = "/login" element={<Login/>}/>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/myorder" element={<MyOrder />} />
         </Routes>
-      </div>
-    
-    </Router>
-  )
+      </Router>
+    </CartProvider>
+  );
 }
 
-export default App
+export default App;
