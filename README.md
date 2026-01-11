@@ -1,5 +1,3 @@
-.
-
 🍔 GoFood — Full-Stack Food Ordering Platform
 
 GoFood is a modern full-stack food delivery web application built using the MERN stack.
@@ -7,7 +5,7 @@ It allows users to browse food items, add them to a cart, place orders, and trac
 
 This project was designed to simulate a real-world food delivery system similar to Swiggy or Zomato, focusing on scalability, performance, and user experience.
 
-🚀 Live Features
+=>  Live Features
 
 User authentication using JWT
 
@@ -30,45 +28,36 @@ Backend REST APIs
 🛠️ Tech Stack
 Frontend
 
-React.js
+-> React.js
 
-React Router
+-> React Router
 
-Context API (Cart State Management)
+-> Context API (Cart State Management)
 
-Bootstrap 5 (Dark Theme UI)
+-> Bootstrap 5 (Dark Theme UI)
 
-JavaScript (ES6)
+-> JavaScript (ES6)
 
-Backend
+-> Backend
 
-Node.js
+-> Node.js
 
-Express.js
+-> Express.js
 
-MongoDB
+-> MongoDB
 
-Mongoose
+-> Mongoose
 
-JWT Authentication
+-> JWT Authentication
 
-Bcrypt.js (Password hashing)
+-> Bcrypt.js (Password hashing)
 
-REST API
+-> REST API
 
-Database
+-> Database
 
-MongoDB Atlas
+-> MongoDB Atlas
 
-Collections:
-
-food_items
-
-food_categories
-
-users
-
-orders
 
 🔐 Authentication Flow
 
