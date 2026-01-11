@@ -11,6 +11,8 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("GoFood backend is running");
 });
+app.use('/api',require("./routes/CreateUser")); 
+app.use(express.json())
 
 app.listen(5000, () => {
   console.log("Server is running on port 5000");
