@@ -1,5 +1,5 @@
-// const mongoose = require("mongoose")
+const mongoose = require("mongoose")
 
-// const newschema = mongoose.Schema(){
+const newschema = mongoose.Schema(){
 
-// }
+}
