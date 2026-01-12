@@ -22,7 +22,7 @@ export default function Signup() {
       const lat = position.coords.latitude;
       const long = position.coords.longitude;
 
-      const response = await fetch("http://localhost:5000/api/auth/getlocation", {
+      const response = await fetch("https://foodewe-1.onrender.com/api/auth/getlocation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ latlong: { lat, long } }),
@@ -39,7 +39,7 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:5000/api/createuser", {
+    const response = await fetch("https://foodewe-1.onrender.com/api/createuser", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
