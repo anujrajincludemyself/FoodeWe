@@ -1,73 +1,170 @@
-# 🍔 Foodewe — Full-Stack Food Ordering Platform
+# 🍔 GoFood — Full-Stack Food Delivery Platform
 
-Foodewe is a modern **full-stack food delivery web application** built using the **MERN stack**.  
-It allows users to browse food items, add them to a cart, place orders, and track their previous orders with secure authentication.
+GoFood is a modern full-stack food ordering web application built using the **MERN stack**.  
+It allows users to browse food items, add them to a cart, place orders, and manage their accounts with secure authentication.
 
-This project was designed to simulate a real-world food delivery system similar to **Swiggy** or **Zomato**, focusing on **scalability, performance, and user experience**.
+The application is fully deployed on the cloud with a **production-grade architecture** using **Vercel, Render, and MongoDB Atlas**.
 
 ---
 
-## 🚀 Live Features
+## 🌐 Live Demo
 
-- User authentication using **JWT**
-- Secure **login & signup**
-- Dynamic food menu from **MongoDB**
-- Category-based food listing
-- Smart **Add to Cart**
-- Order history
-- Responsive modern UI
-- Real-time cart updates
-- Backend **REST APIs**
+Frontend (Vercel):  
+👉 https://foodiewe.vercel.app  
+
+Backend API (Render):  
+👉 https://foodewe-1.onrender.com  
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- React.js  
-- React Router  
-- Context API (Cart State Management)  
-- Bootstrap 5 (Dark Theme UI)  
-- JavaScript (ES6)
+- React.js
+- React Router
+- Bootstrap / Custom CSS
+- Context API (for Cart & State Management)
 
 ### Backend
-- Node.js  
-- Express.js  
-- MongoDB  
-- Mongoose  
-- JWT Authentication  
-- Bcrypt.js (Password hashing)  
-- REST APIs  
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+- JWT Authentication
+- REST API Architecture
 
-### Database
-- MongoDB Atlas  
-
----
-
-## 🔐 Authentication Flow
-
-1. User signs up → Password is **hashed using bcrypt**
-2. JWT token is generated
-3. Token is stored in **localStorage**
-4. Protected routes use **JWT for authorization**
-
-This ensures secure access to cart, orders, and user data.
+### Cloud & Deployment
+- Frontend hosted on **Vercel**
+- Backend hosted on **Render**
+- Database hosted on **MongoDB Atlas**
 
 ---
 
-## 📦 Main Modules
+## ✨ Features
 
-| Module        | Description                         |
-|---------------|-------------------------------------|
-| Signup/Login  | Secure user authentication          |
-| Home          | Food browsing with search           |
-| Cart          | Add, update, remove items           |
-| Orders        | View previous orders                |
-| Backend APIs  | Authentication, Food Data, Orders   |
+- User authentication (Signup / Login with JWT)
+- Browse food items and categories
+- Add items to cart
+- Place and view orders
+- Real-time order total calculation
+- Secure backend APIs
+- Fully deployed cloud-based system
 
 ---
 
-## 🗂️ Project Structure
+## 🧩 Project Architecture
 
-Yet to be deployed 
+```
+User Browser
+      ↓
+Vercel (React Frontend)
+      ↓
+Render (Node + Express Backend)
+      ↓
+MongoDB Atlas (Cloud Database)
+```
 
+---
+
+## 📂 Folder Structure
+
+### Frontend
+```
+frontend/
+  ├── src/
+  │   ├── components/
+  │   ├── screens/
+  │   ├── App.js
+  │   └── index.js
+  ├── public/
+  └── package.json
+```
+
+### Backend
+```
+backend/
+  ├── models/
+  ├── routes/
+  ├── db.js
+  ├── index.js
+  └── package.json
+```
+
+---
+
+## ⚙️ Installation & Setup (Local)
+
+### 1️⃣ Clone the repositories
+```bash
+git clone https://github.com/yourusername/gofood-frontend
+git clone https://github.com/yourusername/gofood-backend
+```
+
+---
+
+### 2️⃣ Setup Backend
+```bash
+cd backend
+npm install
+```
+
+Create a `.env` file:
+```
+MONGO_URI=your_mongodb_atlas_url
+JWT_SECRET=your_secret_key
+```
+
+Start backend:
+```bash
+node index.js
+```
+
+---
+
+### 3️⃣ Setup Frontend
+```bash
+cd frontend
+npm install
+npm start
+```
+
+---
+
+## 🔐 Environment Variables
+
+Backend uses:
+- `MONGO_URI` – MongoDB Atlas connection string
+- `JWT_SECRET` – JWT token secret
+
+---
+
+## 📌 Deployment
+
+- Frontend deployed on **Vercel**
+- Backend deployed on **Render**
+- Database hosted on **MongoDB Atlas**
+
+The frontend communicates securely with the backend using CORS-enabled REST APIs.
+
+---
+
+## 🚀 Future Improvements
+
+- Online payment integration (Razorpay / Stripe)
+- Admin dashboard for managing orders and food items
+- Order tracking system
+- User profile management
+- Mobile app version
+
+---
+
+## 👨‍💻 Author
+
+**Anuj Raj**  
+Full-Stack Developer  
+GitHub: https://github.com/anujrajincludemyself  
+
+---
+
+## ⭐ If you like this project
+
+Please give this repository a ⭐ — it helps a lot!
