@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors");
 
 dotenv.config();
 
@@ -20,15 +21,11 @@ require("./db")((err, data, CatData) => {
 // ------------------ Middleware ------------------
 app.use(express.json());
 
-// CORS for React
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  next();
-});
+// CORS for Production Frontend
+app.use(cors({
+  origin: "https://foodiewe.vercel.app",
+  credentials: true
+}));
 
 // ------------------ Test Route ------------------
 app.get("/", (req, res) => {
