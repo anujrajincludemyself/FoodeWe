@@ -21,9 +21,9 @@ require("./db")((err, data, CatData) => {
 // ------------------ Middleware ------------------
 app.use(express.json());
 
-// CORS for Production Frontend
+// CORS for Development Frontend
 app.use(cors({
-  origin: "https://foodiewe.vercel.app",
+  origin: ["http://localhost:3000", "https://foodiewe.vercel.app"],
   credentials: true
 }));
 

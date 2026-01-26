@@ -2,6 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatchCart, useCart } from "./ContextReducer";
 
+// Import local images
+import defaultImg from "./Images/anna-tukhfatullina-food-photographer-stylist-Mzy-OjtCI70-unsplash.jpg";
+import burgerImg from "./Images/chad-montano-MqT0asuoIcU-unsplash.jpg";
+import pizzaImg from "./Images/davide-cantelli-jpkfc5_d-DI-unsplash.jpg";
+import pastaImg from "./Images/shreyak-singh-0j4bisyPo3M-unsplash.jpg";
+
 export default function Card(props) {
   const data = useCart();
   const dispatch = useDispatchCart();
@@ -12,9 +18,19 @@ export default function Card(props) {
 
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState("");
+  const [imgError, setImgError] = useState(false);
   const priceRef = useRef();
 
   const foodItem = props.item;
+
+  // Fallback images based on food category/name
+  const getFallbackImage = (foodName) => {
+    const name = foodName.toLowerCase();
+    if (name.includes('pizza')) return pizzaImg;
+    if (name.includes('burger')) return burgerImg;
+    if (name.includes('pasta') || name.includes('noodle')) return pastaImg;
+    return defaultImg;
+  };
 
   const handleClick = () => {
     if (!localStorage.getItem("token")) {
@@ -145,9 +161,10 @@ export default function Card(props) {
       <div className="food-card">
         <div style={{ overflow: "hidden" }}>
           <img
-            src={foodItem.img}
+            src={imgError ? getFallbackImage(foodItem.name) : foodItem.img}
             className="food-card-img"
             alt={foodItem.name}
+            onError={() => setImgError(true)}
           />
         </div>
 

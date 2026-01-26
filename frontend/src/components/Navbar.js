@@ -15,6 +15,9 @@ export default function Navbar(props) {
 
     const handleLogout = () => {
         localStorage.removeItem('token')
+        localStorage.removeItem('userEmail')
+        // Trigger auth state update
+        window.dispatchEvent(new Event('authChange'));
         navigate("/login")
     }
 

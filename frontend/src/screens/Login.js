@@ -4,13 +4,19 @@ import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
-      const response = await fetch("https://foodewe-1.onrender.com/api/auth/login", {
+      // Add timeout to prevent hanging
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+      const response = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -19,19 +25,30 @@ export default function Login() {
           email: credentials.email,
           password: credentials.password,
         }),
+        signal: controller.signal,
       });
 
+      clearTimeout(timeoutId);
       const json = await response.json();
 
       if (json.success) {
         localStorage.setItem("userEmail", credentials.email);
         localStorage.setItem("token", json.authToken);
+        // Trigger auth state update
+        window.dispatchEvent(new Event('authChange'));
         navigate("/");
       } else {
         alert(json.error || "Invalid credentials");
       }
     } catch (error) {
-      alert("Server error. Please try again.");
+      if (error.name === 'AbortError') {
+        alert("Login timeout. Please check your connection and try again.");
+      } else {
+        alert("Server error. Please try again.");
+      }
+      console.error("Login error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -251,8 +268,16 @@ export default function Login() {
               type="submit"
               className="btn btn-primary-custom btn-lg w-100 py-3 mb-3"
               style={{ borderRadius: "12px" }}
+              disabled={loading}
             >
-              Login
+              {loading ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Logging in...
+                </>
+              ) : (
+                "Login"
+              )}
             </button>
 
             <Link

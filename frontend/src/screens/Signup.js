@@ -11,6 +11,7 @@ export default function Signup() {
   });
 
   const [address, setAddress] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLocation = async () => {
@@ -22,7 +23,7 @@ export default function Signup() {
       const lat = position.coords.latitude;
       const long = position.coords.longitude;
 
-      const response = await fetch("https://foodewe-1.onrender.com/api/auth/getlocation", {
+      const response = await fetch("http://localhost:5000/api/auth/getlocation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ latlong: { lat, long } }),
@@ -38,20 +39,47 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    const response = await fetch("https://foodewe-1.onrender.com/api/createuser", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(credentials),
-    });
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-    const json = await response.json();
+      const response = await fetch("http://localhost:5000/api/createuser", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(credentials),
+        signal: controller.signal,
+      });
 
-    if (json.success) {
-      localStorage.setItem("token", json.authToken);
-      navigate("/login");
-    } else {
-      alert(json.error || "Signup failed");
+      clearTimeout(timeoutId);
+      const json = await response.json();
+
+      if (json.success) {
+        // If backend returns auth token, auto-login the user
+        if (json.authToken) {
+          localStorage.setItem("userEmail", credentials.email);
+          localStorage.setItem("token", json.authToken);
+          // Trigger auth state update
+          window.dispatchEvent(new Event('authChange'));
+          navigate("/");
+        } else {
+          // Otherwise redirect to login
+          alert("Account created successfully! Please login.");
+          navigate("/login");
+        }
+      } else {
+        alert(json.error || "Signup failed");
+      }
+    } catch (error) {
+      if (error.name === 'AbortError') {
+        alert("Signup timeout. Please check your connection and try again.");
+      } else {
+        alert("Server error. Please try again.");
+      }
+      console.error("Signup error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -391,8 +419,16 @@ export default function Signup() {
               type="submit"
               className="btn btn-primary-custom btn-lg w-100 py-3 mb-3"
               style={{ borderRadius: "12px" }}
+              disabled={loading}
             >
-              Create Account
+              {loading ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Creating Account...
+                </>
+              ) : (
+                "Create Account"
+              )}
             </button>
 
             {/* Login Link */}
